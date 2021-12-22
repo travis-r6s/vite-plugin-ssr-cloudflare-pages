@@ -1,0 +1,1 @@
+{"version":3,"file":"isExternalLink.js","sourceRoot":"","sources":["../../../../../client/router/utils/isExternalLink.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,cAAc,EAAE,CAAA;AAEzB,SAAS,cAAc,CAAC,GAAW;IACjC,OAAO,CAAC,GAAG,CAAC,UAAU,CAAC,GAAG,CAAC,IAAI,CAAC,GAAG,CAAC,UAAU,CAAC,GAAG,CAAC,IAAI,CAAC,GAAG,CAAC,UAAU,CAAC,GAAG,CAAC,IAAI,GAAG,KAAK,EAAE,CAAA;AAC3F,CAAC"}

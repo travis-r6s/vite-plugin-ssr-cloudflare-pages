@@ -1,0 +1,1 @@
+{"version":3,"file":"projectInfo.js","sourceRoot":"","sources":["../../../../shared/utils/projectInfo.ts"],"names":[],"mappings":";;;AAAA,MAAM,eAAe,GAAG,QAAQ,CAAA;AAEnB,QAAA,WAAW,GAAG;IACzB,WAAW,EAAE,iBAA0B;IACvC,cAAc,EAAE,eAAe;IAC/B,cAAc,EAAE,iBAA0B;IAC1C,gBAAgB,EAAE,6CAAsD;IACxE,aAAa,EAAE,uCAAgD;CAChE,CAAA"}

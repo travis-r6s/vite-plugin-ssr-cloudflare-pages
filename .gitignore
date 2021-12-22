@@ -1,5 +1,6 @@
 node_modules/
 dist/
+!vite-plugin-ssr/dist
 .parcel-cache/20f55617d063c7e5.txt
 .parcel-cache/7688526141eec1ec.txt
 .parcel-cache/c80e998371896a9d.txt

@@ -7,6 +7,9 @@
     "server": "ts-node ./server",
     "serve": "wrangler pages dev ./dist"
   },
+  "resolve": {
+    "@vue/server-renderer": "./vue-server-renderer"
+  },
   "dependencies": {
     "@types/express": "^4.17.13",
     "@types/node": "^16.11.11",

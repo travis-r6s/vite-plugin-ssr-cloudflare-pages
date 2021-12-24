@@ -30,6 +30,10 @@ export default {
         })
       }
     }
+
+    // Keep browser requests happy during testing
+    if (request.url.includes( 'favicon' )) return new Response('', { status: 200 })
+
     // Otherwise, serve the static assets.
     // Without this, the Worker will error and no assets will be served.
     return env.ASSETS.fetch(request);

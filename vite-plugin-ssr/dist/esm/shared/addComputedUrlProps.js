@@ -1,9 +1,10 @@
 import { assert, parseUrl, objectAssign, isCallable } from './utils';
 export { addComputedUrlProps };
 function addComputedUrlProps(pageContext) {
+    var _a, _b;
     if ('urlPathname' in pageContext) {
-        assert(Object.getOwnPropertyDescriptor(pageContext, 'urlPathname')?.get === urlPathnameGetter);
-        assert(Object.getOwnPropertyDescriptor(pageContext, 'urlParsed')?.get === urlParsedGetter);
+        assert(((_a = Object.getOwnPropertyDescriptor(pageContext, 'urlPathname')) === null || _a === void 0 ? void 0 : _a.get) === urlPathnameGetter);
+        assert(((_b = Object.getOwnPropertyDescriptor(pageContext, 'urlParsed')) === null || _b === void 0 ? void 0 : _b.get) === urlParsedGetter);
     }
     else {
         Object.defineProperty(pageContext, 'urlPathname', {

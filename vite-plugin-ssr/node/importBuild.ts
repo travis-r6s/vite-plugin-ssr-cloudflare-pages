@@ -4,11 +4,11 @@ import { setPageFiles } from '../shared/getPageFiles'
 import { assertUsage } from '../shared/utils'
 
 export { importBuild }
-export { importBuildWasCalled }
+export { importBuildWasLoaded }
 
 let wasCalled = false
 
-function importBuildWasCalled() {
+function importBuildWasLoaded() {
   return wasCalled
 }
 
@@ -16,10 +16,12 @@ function importBuild({
   pageFiles,
   clientManifest,
   serverManifest,
+  pluginManifest,
 }: {
   pageFiles: unknown
   clientManifest: unknown
   serverManifest: unknown
+  pluginManifest: unknown
 }) {
   assertUsage(
     wasCalled === false,
@@ -30,6 +32,6 @@ function importBuild({
     'You are trying to load `dist/server/importBuild.js` after calling `createPageRenderer()`. Make sure to load `dist/server/importBuild.js` before calling `createPageRenderer()` instead.',
   )
   setPageFiles(pageFiles)
-  setViteManifest({ clientManifest, serverManifest })
+  setViteManifest({ clientManifest, serverManifest, pluginManifest })
   wasCalled = true
 }

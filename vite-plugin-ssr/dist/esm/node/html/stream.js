@@ -476,8 +476,11 @@ function encodeForWebStream(thing) {
 }
 async function loadStreamNodeModule() {
     // Eval to avoid bundlers to try to include the `stream` module
-    const streamModule = await eval(`import('stream')`);
+    const streamModule = await dynamicImport('stream');
     const { Readable, Writable } = streamModule;
     return { Readable, Writable };
+}
+function dynamicImport(modulePath) {
+    return new Function('modulePath', 'return import(modulePath)')(modulePath);
 }
 //# sourceMappingURL=stream.js.map

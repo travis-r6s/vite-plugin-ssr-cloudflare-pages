@@ -33,14 +33,14 @@ async function runOnBeforeRenderHooks(pageFile, defaultFile, pageContext) {
     let pageHookWasCalled = false;
     let skipHook = false;
     const pageContextAddendum = {};
-    if (defaultFile?.onBeforeRenderHook && !pageFile?.fileExports.skipOnBeforeRenderDefaultHook) {
+    if ((defaultFile === null || defaultFile === void 0 ? void 0 : defaultFile.onBeforeRenderHook) && !(pageFile === null || pageFile === void 0 ? void 0 : pageFile.fileExports.skipOnBeforeRenderDefaultHook)) {
         const hookReturn = await defaultFile.onBeforeRenderHook.callHook({
             ...pageContext,
             runOnBeforeRenderPageHook,
             skipOnBeforeRenderPageHook,
         });
         Object.assign(pageContextAddendum, hookReturn.pageContext);
-        if (pageFile?.onBeforeRenderHook) {
+        if (pageFile === null || pageFile === void 0 ? void 0 : pageFile.onBeforeRenderHook) {
             assertUsage(pageHookWasCalled || skipHook, [
                 `The page \`${pageContext._pageId}\` has a \`onBeforeRender()\` hook defined in ${pageFile.filePath} as well as in ${defaultFile.filePath}.`,
                 `Either \`export const skipOnBeforeRenderDefaultHook = true\` in ${pageFile.filePath}, or`,
@@ -50,12 +50,12 @@ async function runOnBeforeRenderHooks(pageFile, defaultFile, pageContext) {
         }
     }
     else {
-        if (pageFile?.onBeforeRenderHook) {
+        if (pageFile === null || pageFile === void 0 ? void 0 : pageFile.onBeforeRenderHook) {
             const hookReturn = await runOnBeforeRenderPageHook(pageContext);
             Object.assign(pageContextAddendum, hookReturn.pageContext);
         }
     }
-    assert(!pageFile?.onBeforeRenderHook || pageHookWasCalled || skipHook);
+    assert(!(pageFile === null || pageFile === void 0 ? void 0 : pageFile.onBeforeRenderHook) || pageHookWasCalled || skipHook);
     return pageContextAddendum;
     async function skipOnBeforeRenderPageHook() {
         assertUsage(pageHookWasCalled === false, 'You cannot call `pageContext.skipOnBeforeRenderPageHook()` after having called `pageContext.runOnBeforeRenderPageHook()`.');
@@ -66,7 +66,7 @@ async function runOnBeforeRenderHooks(pageFile, defaultFile, pageContext) {
         assertUsage(pageHookWasCalled === false, 'You already called `pageContext.runOnBeforeRenderPageHook()`; you cannot call it a second time.');
         assertUsage(skipHook === false, 'You cannot call `pageContext.runOnBeforeRenderPageHook()` after having called `pageContext.skipOnBeforeRenderPageHook()`.');
         pageHookWasCalled = true;
-        if (!pageFile?.onBeforeRenderHook) {
+        if (!(pageFile === null || pageFile === void 0 ? void 0 : pageFile.onBeforeRenderHook)) {
             return { pageContext: {} };
         }
         const hookReturn = await pageFile.onBeforeRenderHook.callHook(pageContextProvided || pageContext);

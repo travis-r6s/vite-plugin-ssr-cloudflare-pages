@@ -5,6 +5,7 @@ import { PromiseType, parseUrl } from '../shared/utils';
 import { PageIsomorphicFile, PageIsomorphicFileDefault } from '../shared/loadPageIsomorphicFiles';
 import { OnBeforeRenderHook } from '../shared/onBeforeRenderHook';
 import { StreamPipeNode, StreamPipeWeb, StreamReadableNode, StreamReadableWeb } from './html/stream';
+import { PageContextUrls } from '../shared/addComputedUrlProps';
 export { renderPageWithoutThrowing };
 export type { renderPage };
 export { prerenderPage };
@@ -46,18 +47,166 @@ declare function prerenderPage(pageContext: {
 } & PageFiles & GlobalContext): Promise<{
     documentHtml: string;
     pageContextSerialized: null;
+    pageContext: {
+        url: string;
+        routeParams: Record<string, string>;
+        _isPreRendering: true;
+        _pageId: string;
+        _usesClientRouter: boolean;
+        _pageContextAlreadyProvidedByPrerenderHook?: true;
+    } & {
+        Page: unknown;
+        pageExports: Record<string, unknown>;
+        _pageIsomorphicFile: PageIsomorphicFile;
+        _pageIsomorphicFileDefault: PageIsomorphicFileDefault;
+        _pageServerFile: PageServerFileProps | null;
+        _pageServerFileDefault: PageServerFileProps | null;
+        _pageClientPath: string;
+    } & {
+        _passToClient: string[];
+    } & {
+        _getPageAssets: () => Promise<{
+            src: string;
+            assetType: "script" | "style" | "preload";
+            mediaType: "text/javascript" | "text/css" | "image/jpeg" | "image/png" | "image/webp" | "image/gif" | "image/svg+xml" | "font/ttf" | "font/woff" | "font/woff2" | null;
+            preloadType: "font" | "script" | "style" | "image" | null;
+        }[]>;
+    } & {
+        _parseUrl: typeof _parseUrl;
+        _baseUrl: string;
+    } & {
+        _allPageFiles: AllPageFiles;
+    } & {
+        _allPageIds: string[];
+    } & {
+        _pageRoutes: PageRoutes;
+        _onBeforeRouteHook: import("../shared/route/callOnBeforeRouteHook").OnBeforeRouteHook | null;
+    } & {
+        _isPageContextRequest: boolean;
+    } & PageContextUrls;
 } | {
     documentHtml: string;
     pageContextSerialized: string;
+    pageContext: {
+        url: string;
+        routeParams: Record<string, string>;
+        _isPreRendering: true;
+        _pageId: string;
+        _usesClientRouter: boolean;
+        _pageContextAlreadyProvidedByPrerenderHook?: true;
+    } & {
+        Page: unknown;
+        pageExports: Record<string, unknown>;
+        _pageIsomorphicFile: PageIsomorphicFile;
+        _pageIsomorphicFileDefault: PageIsomorphicFileDefault;
+        _pageServerFile: PageServerFileProps | null;
+        _pageServerFileDefault: PageServerFileProps | null;
+        _pageClientPath: string;
+    } & {
+        _passToClient: string[];
+    } & {
+        _getPageAssets: () => Promise<{
+            src: string;
+            assetType: "script" | "style" | "preload";
+            mediaType: "text/javascript" | "text/css" | "image/jpeg" | "image/png" | "image/webp" | "image/gif" | "image/svg+xml" | "font/ttf" | "font/woff" | "font/woff2" | null;
+            preloadType: "font" | "script" | "style" | "image" | null;
+        }[]>;
+    } & {
+        _parseUrl: typeof _parseUrl;
+        _baseUrl: string;
+    } & {
+        _allPageFiles: AllPageFiles;
+    } & {
+        _allPageIds: string[];
+    } & {
+        _pageRoutes: PageRoutes;
+        _onBeforeRouteHook: import("../shared/route/callOnBeforeRouteHook").OnBeforeRouteHook | null;
+    } & {
+        _isPageContextRequest: boolean;
+    } & PageContextUrls;
 }>;
 declare function renderStatic404Page(globalContext: GlobalContext & {
     _isPreRendering: true;
 }): Promise<{
     documentHtml: string;
     pageContextSerialized: null;
+    pageContext: {
+        url: string;
+        routeParams: Record<string, string>;
+        _isPreRendering: true;
+        _pageId: string;
+        _usesClientRouter: boolean;
+        _pageContextAlreadyProvidedByPrerenderHook?: true;
+    } & {
+        Page: unknown;
+        pageExports: Record<string, unknown>;
+        _pageIsomorphicFile: PageIsomorphicFile;
+        _pageIsomorphicFileDefault: PageIsomorphicFileDefault;
+        _pageServerFile: PageServerFileProps | null;
+        _pageServerFileDefault: PageServerFileProps | null;
+        _pageClientPath: string;
+    } & {
+        _passToClient: string[];
+    } & {
+        _getPageAssets: () => Promise<{
+            src: string;
+            assetType: "script" | "style" | "preload";
+            mediaType: "text/javascript" | "text/css" | "image/jpeg" | "image/png" | "image/webp" | "image/gif" | "image/svg+xml" | "font/ttf" | "font/woff" | "font/woff2" | null;
+            preloadType: "font" | "script" | "style" | "image" | null;
+        }[]>;
+    } & {
+        _parseUrl: typeof _parseUrl;
+        _baseUrl: string;
+    } & {
+        _allPageFiles: AllPageFiles;
+    } & {
+        _allPageIds: string[];
+    } & {
+        _pageRoutes: PageRoutes;
+        _onBeforeRouteHook: import("../shared/route/callOnBeforeRouteHook").OnBeforeRouteHook | null;
+    } & {
+        _isPageContextRequest: boolean;
+    } & PageContextUrls;
 } | {
     documentHtml: string;
     pageContextSerialized: string;
+    pageContext: {
+        url: string;
+        routeParams: Record<string, string>;
+        _isPreRendering: true;
+        _pageId: string;
+        _usesClientRouter: boolean;
+        _pageContextAlreadyProvidedByPrerenderHook?: true;
+    } & {
+        Page: unknown;
+        pageExports: Record<string, unknown>;
+        _pageIsomorphicFile: PageIsomorphicFile;
+        _pageIsomorphicFileDefault: PageIsomorphicFileDefault;
+        _pageServerFile: PageServerFileProps | null;
+        _pageServerFileDefault: PageServerFileProps | null;
+        _pageClientPath: string;
+    } & {
+        _passToClient: string[];
+    } & {
+        _getPageAssets: () => Promise<{
+            src: string;
+            assetType: "script" | "style" | "preload";
+            mediaType: "text/javascript" | "text/css" | "image/jpeg" | "image/png" | "image/webp" | "image/gif" | "image/svg+xml" | "font/ttf" | "font/woff" | "font/woff2" | null;
+            preloadType: "font" | "script" | "style" | "image" | null;
+        }[]>;
+    } & {
+        _parseUrl: typeof _parseUrl;
+        _baseUrl: string;
+    } & {
+        _allPageFiles: AllPageFiles;
+    } & {
+        _allPageIds: string[];
+    } & {
+        _pageRoutes: PageRoutes;
+        _onBeforeRouteHook: import("../shared/route/callOnBeforeRouteHook").OnBeforeRouteHook | null;
+    } & {
+        _isPageContextRequest: boolean;
+    } & PageContextUrls;
 } | null>;
 declare type PageServerFileProps = {
     filePath: string;

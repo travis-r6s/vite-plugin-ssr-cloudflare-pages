@@ -13,9 +13,9 @@ cli
     .option('--parallel <numberOfJobs>', '[number] Number of jobs running in parallel. Default: `os.cpus().length`. Set to `1` to disable concurrency.')
     .action(async (options) => {
     assertOptions();
-    const { partial, noExtraDir, clientRouter, base, parallel, outDir } = options;
+    const { partial, noExtraDir, base, parallel, outDir } = options;
     const root = options.root && resolve(options.root);
-    await prerender({ partial, noExtraDir, clientRouter, base, root, parallel, outDir });
+    await prerender({ partial, noExtraDir, base, root, parallel, outDir });
 });
 function assertOptions() {
     // We use `rawOptions` because `cac` maps option names to camelCase

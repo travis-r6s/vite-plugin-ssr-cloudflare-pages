@@ -3,7 +3,8 @@ import { hasProp, objectAssign } from '../shared/utils';
 import { assert, assertUsage, getPluginError } from '../shared/utils/assert';
 export { getPageContextSerializedInHtml };
 function getPageContextSerializedInHtml() {
-    const pageContextJson = document.getElementById('vite-plugin-ssr_pageContext')?.textContent;
+    var _a;
+    const pageContextJson = (_a = document.getElementById('vite-plugin-ssr_pageContext')) === null || _a === void 0 ? void 0 : _a.textContent;
     assertUsage(pageContextJson, 'Client-side `pageContext` missing. Make sure that `injectAssets()` is applied to the HTML, see https://vite-plugin-ssr.com/injectAssets');
     const pageContext = parse(pageContextJson).pageContext;
     assert(hasProp(pageContext, '_pageId', 'string'));

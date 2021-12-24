@@ -81,6 +81,7 @@ function retrieveUrl(url) {
     return url;
 }
 function parseWithNewUrl(url) {
+    var _a;
     let origin;
     let pathname;
     try {
@@ -94,8 +95,9 @@ function parseWithNewUrl(url) {
         origin = null;
         // In the browser, this is the Base URL of the current URL
         const currentBase = typeof window !== 'undefined' &&
+            (
             // We need to access safely in case the user sets `window` in Node.js
-            window?.document?.baseURI;
+            (_a = window === null || window === void 0 ? void 0 : window.document) === null || _a === void 0 ? void 0 : _a.baseURI);
         // We cannot resolve relative URLs in Node.js
         assert(currentBase || !url.startsWith('.'));
         // Is there any other kind of URLs that vite-plugin-ssr should support?

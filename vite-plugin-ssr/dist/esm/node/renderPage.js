@@ -258,11 +258,11 @@ async function prerenderPage(pageContext) {
     const documentHtml = await getHtmlString(renderHookResult.htmlRender);
     assert(typeof documentHtml === 'string');
     if (!pageContext._usesClientRouter) {
-        return { documentHtml, pageContextSerialized: null };
+        return { documentHtml, pageContextSerialized: null, pageContext };
     }
     else {
         const pageContextSerialized = serializePageContextClientSide(pageContext);
-        return { documentHtml, pageContextSerialized };
+        return { documentHtml, pageContextSerialized, pageContext };
     }
 }
 async function renderStatic404Page(globalContext) {
@@ -316,13 +316,13 @@ async function loadPageFiles(pageContext) {
         _pageClientPath: pageClientPath,
     };
     objectAssign(pageFiles, {
-        _passToClient: pageServerFile?.fileExports.passToClient || pageServerFileDefault?.fileExports.passToClient || [],
+        _passToClient: (pageServerFile === null || pageServerFile === void 0 ? void 0 : pageServerFile.fileExports.passToClient) || (pageServerFileDefault === null || pageServerFileDefault === void 0 ? void 0 : pageServerFileDefault.fileExports.passToClient) || [],
     });
     const isPreRendering = pageContext._isPreRendering;
     assert([true, false].includes(isPreRendering));
     const dependencies = [
-        pageIsomorphicFile?.filePath,
-        pageIsomorphicFileDefault?.filePath,
+        pageIsomorphicFile === null || pageIsomorphicFile === void 0 ? void 0 : pageIsomorphicFile.filePath,
+        pageIsomorphicFileDefault === null || pageIsomorphicFileDefault === void 0 ? void 0 : pageIsomorphicFileDefault.filePath,
         pageClientPath,
     ].filter((p) => !!p);
     objectAssign(pageFiles, {
@@ -334,10 +334,11 @@ async function loadPageFiles(pageContext) {
     return pageFiles;
 }
 function getPageClientPath(pageContext) {
+    var _a, _b;
     const { _pageId: pageId, _allPageFiles: allPageFiles } = pageContext;
     const pageClientFiles = allPageFiles['.page.client'];
     assertUsage(pageClientFiles.length > 0, 'No `*.page.client.js` file found. Make sure to create one. You can create a `_default.page.client.js` which will apply as default to all your pages.');
-    const pageClientPath = findPageFile(pageClientFiles, pageId)?.filePath || findDefaultFile(pageClientFiles, pageId)?.filePath;
+    const pageClientPath = ((_a = findPageFile(pageClientFiles, pageId)) === null || _a === void 0 ? void 0 : _a.filePath) || ((_b = findDefaultFile(pageClientFiles, pageId)) === null || _b === void 0 ? void 0 : _b.filePath);
     assert(pageClientPath);
     return pageClientPath;
 }
@@ -407,6 +408,7 @@ function assertExportsOfServerPage(fileExports, filePath) {
     });
 }
 async function executeOnBeforeRenderHooks(pageContext) {
+    var _a, _b, _c, _d;
     if (pageContext._pageContextAlreadyProvidedByPrerenderHook) {
         return;
     }
@@ -421,12 +423,12 @@ async function executeOnBeforeRenderHooks(pageContext) {
         Object.assign(pageContext, pageContextAddendum);
         assertUsageServerHooksCalled({
             hooksServer: [
-                pageContext._pageServerFile?.onBeforeRenderHook && pageContext._pageServerFile.filePath,
-                pageContext._pageServerFileDefault?.onBeforeRenderHook && pageContext._pageServerFileDefault.filePath,
+                ((_a = pageContext._pageServerFile) === null || _a === void 0 ? void 0 : _a.onBeforeRenderHook) && pageContext._pageServerFile.filePath,
+                ((_b = pageContext._pageServerFileDefault) === null || _b === void 0 ? void 0 : _b.onBeforeRenderHook) && pageContext._pageServerFileDefault.filePath,
             ],
             hooksIsomorphic: [
-                pageContext._pageIsomorphicFile?.onBeforeRenderHook && pageContext._pageIsomorphicFile.filePath,
-                pageContext._pageIsomorphicFileDefault?.onBeforeRenderHook && pageContext._pageIsomorphicFileDefault.filePath,
+                ((_c = pageContext._pageIsomorphicFile) === null || _c === void 0 ? void 0 : _c.onBeforeRenderHook) && pageContext._pageIsomorphicFile.filePath,
+                ((_d = pageContext._pageIsomorphicFileDefault) === null || _d === void 0 ? void 0 : _d.onBeforeRenderHook) && pageContext._pageIsomorphicFileDefault.filePath,
             ],
             serverHooksCalled,
             _pageId: pageContext._pageId,
@@ -438,8 +440,9 @@ async function executeOnBeforeRenderHooks(pageContext) {
     }
     return undefined;
     function isomorphicHooksExist() {
-        return (!!pageContext._pageIsomorphicFile?.onBeforeRenderHook ||
-            !!pageContext._pageIsomorphicFileDefault?.onBeforeRenderHook);
+        var _a, _b;
+        return (!!((_a = pageContext._pageIsomorphicFile) === null || _a === void 0 ? void 0 : _a.onBeforeRenderHook) ||
+            !!((_b = pageContext._pageIsomorphicFileDefault) === null || _b === void 0 ? void 0 : _b.onBeforeRenderHook));
     }
     async function skipOnBeforeRenderServerHooks() {
         assertUsage(serverHooksCalled === false, 'You cannot call `pageContext.skipOnBeforeRenderServerHooks()` after having called `pageContext.runOnBeforeRenderServerHooks()`.');
@@ -458,14 +461,14 @@ async function executeRenderHook(pageContext) {
     let render;
     let renderFilePath;
     const pageServerFile = pageContext._pageServerFile;
-    const pageRenderFunction = pageServerFile?.fileExports.render;
+    const pageRenderFunction = pageServerFile === null || pageServerFile === void 0 ? void 0 : pageServerFile.fileExports.render;
     if (pageServerFile && pageRenderFunction) {
         render = pageRenderFunction;
         renderFilePath = pageServerFile.filePath;
     }
     else {
         const pageServerFileDefault = pageContext._pageServerFileDefault;
-        const pageDefaultRenderFunction = pageServerFileDefault?.fileExports.render;
+        const pageDefaultRenderFunction = pageServerFileDefault === null || pageServerFileDefault === void 0 ? void 0 : pageServerFileDefault.fileExports.render;
         if (pageServerFileDefault && pageDefaultRenderFunction) {
             render = pageDefaultRenderFunction;
             renderFilePath = pageServerFileDefault.filePath;

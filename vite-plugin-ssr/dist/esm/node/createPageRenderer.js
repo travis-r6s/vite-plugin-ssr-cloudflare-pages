@@ -3,7 +3,7 @@ import { renderPageWithoutThrowing } from './renderPage';
 import { assertUsageBaseUrl, hasProp } from '../shared/utils';
 import { assert, assertUsage } from '../shared/utils/assert';
 // import { resolve } from 'path';
-import { importBuildWasCalled } from './importBuild';
+import { importBuildWasLoaded } from './importBuild';
 export { createPageRenderer };
 export { createPageRendererWasCalled };
 let wasCalled = false;
@@ -25,13 +25,13 @@ function assertArguments(ssrEnv, args) {
     assertUsage(typeof baseUrl === 'string', '`createPageRenderer({ base })`: argument `base` should be a string or `undefined`.');
     assertUsageBaseUrl(baseUrl, '`createPageRenderer({ base })`: ');
     assertUsage(isProduction === true || isProduction === false || isProduction === undefined, '`createPageRenderer({ isProduction })`: argument `isProduction` should be `true`, `false`, or `undefined`.');
-    if (importBuildWasCalled()) {
+    if (importBuildWasLoaded()) {
         assertUsage(isProduction, '`createPageRenderer({ isProduction })`: argument `isProduction` should be `true` if `dist/server/importBuild.js` is loaded. (You should load `dist/server/importBuild.js` only in production.)');
         assertUsage(root === undefined, '`createPageRenderer({ root })`: argument `root` has no effect if `dist/server/importBuild.js` is loaded. Remove the `root` argument.');
     }
     if (isProduction === true) {
         assertUsage(viteDevServer === undefined, '`createPageRenderer({ viteDevServer, isProduction })`: if `isProduction` is `true`, then `viteDevServer` should be `undefined`.');
-        assertUsage(root || importBuildWasCalled(), "`createPageRenderer({ root })`: argument `root` is missing. (Alternatively, if `root` doesn't exist because you are bundling your server code into a single file, then load `dist/server/importBuild.js`.)");
+        assertUsage(root || importBuildWasLoaded(), "`createPageRenderer({ root })`: argument `root` is missing. (Alternatively, if `root` doesn't exist because you are bundling your server code into a single file, then load `dist/server/importBuild.js`.)");
     }
     else {
         assertUsage(root, '`createPageRenderer({ root })`: argument `root` is missing.');

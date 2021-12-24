@@ -16,18 +16,18 @@ function setPageFiles(pageFiles) {
 function isPageFilesSet() {
     return !!allPageFilesUnprocessed;
 }
-let asyncSetter;
-function setPageFilesAsync(_asyncSetter) {
-    asyncSetter = _asyncSetter;
+let asyncGetter;
+function setPageFilesAsync(getter) {
+    asyncGetter = getter;
 }
 const fileTypes = ['.page', '.page.server', '.page.route', '.page.client'];
 async function getAllPageFiles() {
-    if (asyncSetter) {
+    if (asyncGetter) {
         const ssrEnv = getSsrEnv();
         if (!allPageFilesUnprocessed ||
             // We reload all glob imports in dev to make auto-reload work
             !ssrEnv.isProduction) {
-            allPageFilesUnprocessed = (await asyncSetter());
+            allPageFilesUnprocessed = (await asyncGetter());
         }
         assert(hasProp(allPageFilesUnprocessed, '.page'));
     }

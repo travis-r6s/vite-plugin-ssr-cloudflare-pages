@@ -252,11 +252,11 @@ async function prerenderPage(pageContext) {
     const documentHtml = await (0, renderHtml_1.getHtmlString)(renderHookResult.htmlRender);
     (0, utils_1.assert)(typeof documentHtml === 'string');
     if (!pageContext._usesClientRouter) {
-        return { documentHtml, pageContextSerialized: null };
+        return { documentHtml, pageContextSerialized: null, pageContext };
     }
     else {
         const pageContextSerialized = (0, serializePageContextClientSide_1.serializePageContextClientSide)(pageContext);
-        return { documentHtml, pageContextSerialized };
+        return { documentHtml, pageContextSerialized, pageContext };
     }
 }
 exports.prerenderPage = prerenderPage;

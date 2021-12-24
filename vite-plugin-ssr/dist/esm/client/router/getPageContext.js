@@ -103,11 +103,11 @@ function getOnBeforeRenderServerHookFiles(pageContext) {
     const serverFiles = pageContext._serverFiles;
     const pageId = pageContext._pageId;
     const serverFileDefault = findDefaultFile(serverFiles, pageId);
-    if (serverFileDefault?.fileExports.hasExportOnBeforeRender) {
+    if (serverFileDefault === null || serverFileDefault === void 0 ? void 0 : serverFileDefault.fileExports.hasExportOnBeforeRender) {
         hooksServer.push(serverFileDefault.filePath);
     }
     const serverFilePage = findPageFile(serverFiles, pageId);
-    if (serverFilePage?.fileExports.hasExportOnBeforeRender) {
+    if (serverFilePage === null || serverFilePage === void 0 ? void 0 : serverFilePage.fileExports.hasExportOnBeforeRender) {
         hooksServer.push(serverFilePage.filePath);
     }
     return hooksServer;
@@ -133,6 +133,7 @@ function deleteRedundantPageContext(pageContext) {
     });
 }
 async function executeOnBeforeRenderHooks(pageContext) {
+    var _a, _b;
     let serverHooksCalled = false;
     let skipServerHooks = false;
     const pageContextOnBeforeRenderHooks = {};
@@ -146,8 +147,8 @@ async function executeOnBeforeRenderHooks(pageContext) {
         assertUsageServerHooksCalled({
             hooksServer: getOnBeforeRenderServerHookFiles(pageContext),
             hooksIsomorphic: [
-                pageContext._pageIsomorphicFile?.onBeforeRenderHook && pageContext._pageIsomorphicFile.filePath,
-                pageContext._pageIsomorphicFileDefault?.onBeforeRenderHook && pageContext._pageIsomorphicFileDefault.filePath,
+                ((_a = pageContext._pageIsomorphicFile) === null || _a === void 0 ? void 0 : _a.onBeforeRenderHook) && pageContext._pageIsomorphicFile.filePath,
+                ((_b = pageContext._pageIsomorphicFileDefault) === null || _b === void 0 ? void 0 : _b.onBeforeRenderHook) && pageContext._pageIsomorphicFileDefault.filePath,
             ],
             serverHooksCalled,
             _pageId: pageContext._pageId,
@@ -168,8 +169,9 @@ async function executeOnBeforeRenderHooks(pageContext) {
         return pageContextOnBeforeRenderHooks;
     }
     function isomorphicHooksExist() {
-        return (!!pageContext._pageIsomorphicFile?.onBeforeRenderHook ||
-            !!pageContext._pageIsomorphicFileDefault?.onBeforeRenderHook);
+        var _a, _b;
+        return (!!((_a = pageContext._pageIsomorphicFile) === null || _a === void 0 ? void 0 : _a.onBeforeRenderHook) ||
+            !!((_b = pageContext._pageIsomorphicFileDefault) === null || _b === void 0 ? void 0 : _b.onBeforeRenderHook));
     }
     function serverHooksExists() {
         return getOnBeforeRenderServerHookFiles({ ...pageContext, ...pageContextOnBeforeRenderHooks }).length > 0;

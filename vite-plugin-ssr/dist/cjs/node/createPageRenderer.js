@@ -28,13 +28,13 @@ function assertArguments(ssrEnv, args) {
     (0, assert_1.assertUsage)(typeof baseUrl === 'string', '`createPageRenderer({ base })`: argument `base` should be a string or `undefined`.');
     (0, utils_1.assertUsageBaseUrl)(baseUrl, '`createPageRenderer({ base })`: ');
     (0, assert_1.assertUsage)(isProduction === true || isProduction === false || isProduction === undefined, '`createPageRenderer({ isProduction })`: argument `isProduction` should be `true`, `false`, or `undefined`.');
-    if ((0, importBuild_1.importBuildWasCalled)()) {
+    if ((0, importBuild_1.importBuildWasLoaded)()) {
         (0, assert_1.assertUsage)(isProduction, '`createPageRenderer({ isProduction })`: argument `isProduction` should be `true` if `dist/server/importBuild.js` is loaded. (You should load `dist/server/importBuild.js` only in production.)');
         (0, assert_1.assertUsage)(root === undefined, '`createPageRenderer({ root })`: argument `root` has no effect if `dist/server/importBuild.js` is loaded. Remove the `root` argument.');
     }
     if (isProduction === true) {
         (0, assert_1.assertUsage)(viteDevServer === undefined, '`createPageRenderer({ viteDevServer, isProduction })`: if `isProduction` is `true`, then `viteDevServer` should be `undefined`.');
-        (0, assert_1.assertUsage)(root || (0, importBuild_1.importBuildWasCalled)(), "`createPageRenderer({ root })`: argument `root` is missing. (Alternatively, if `root` doesn't exist because you are bundling your server code into a single file, then load `dist/server/importBuild.js`.)");
+        (0, assert_1.assertUsage)(root || (0, importBuild_1.importBuildWasLoaded)(), "`createPageRenderer({ root })`: argument `root` is missing. (Alternatively, if `root` doesn't exist because you are bundling your server code into a single file, then load `dist/server/importBuild.js`.)");
     }
     else {
         (0, assert_1.assertUsage)(root, '`createPageRenderer({ root })`: argument `root` is missing.');

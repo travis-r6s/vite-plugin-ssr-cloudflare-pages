@@ -9,10 +9,11 @@ function build() {
         name: 'vite-plugin-ssr:build',
         apply: 'build',
         config: (config) => {
+            var _a, _b;
             isSsrBuild = isSSR_config(config);
             const input = {
                 ...entryPoints(config),
-                ...normalizeRollupInput(config.build?.rollupOptions?.input),
+                ...normalizeRollupInput((_b = (_a = config.build) === null || _a === void 0 ? void 0 : _a.rollupOptions) === null || _b === void 0 ? void 0 : _b.input),
             };
             return {
                 build: {
@@ -94,11 +95,12 @@ function getRoot(config) {
     return root;
 }
 function getOutDir(config) {
-    let outDir = config.build?.outDir;
+    var _a, _b;
+    let outDir = (_a = config.build) === null || _a === void 0 ? void 0 : _a.outDir;
     if (!outDir) {
         outDir = 'dist';
     }
-    return config.build?.ssr ? `${outDir}/server` : `${outDir}/client`;
+    return ((_b = config.build) === null || _b === void 0 ? void 0 : _b.ssr) ? `${outDir}/server` : `${outDir}/client`;
 }
 function posixPath(path) {
     return path.split(pathSep).join(pathPosix.sep);

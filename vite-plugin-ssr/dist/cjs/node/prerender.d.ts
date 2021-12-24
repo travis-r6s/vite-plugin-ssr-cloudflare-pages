@@ -6,12 +6,13 @@ export { prerender };
  * @param root The root directory of your project (where `vite.config.js` live) (default: `process.cwd()`).
  * @param outDir The build directory of your project (default: `dist`).
  */
-declare function prerender({ partial, noExtraDir, root, outDir, clientRouter, parallel, base, }?: {
+declare function prerender({ onPagePrerender, pageContextInit, partial, noExtraDir, root, outDir, parallel, base, }: {
+    onPagePrerender?: Function | null;
+    pageContextInit?: Record<string, unknown>;
     partial?: boolean;
     noExtraDir?: boolean;
     root?: string;
     outDir?: string;
-    clientRouter?: boolean;
     base?: string;
     parallel?: number;
 }): Promise<void>;

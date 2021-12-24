@@ -9,7 +9,7 @@ export { setPageFilesAsync };
 export { isPageFilesSet };
 declare function setPageFiles(pageFiles: unknown): void;
 declare function isPageFilesSet(): boolean;
-declare function setPageFilesAsync(_asyncSetter: () => Promise<unknown>): void;
+declare function setPageFilesAsync(getter: () => Promise<unknown>): void;
 declare type PageFile = {
     filePath: string;
     loadFile: () => Promise<Record<string, unknown>>;

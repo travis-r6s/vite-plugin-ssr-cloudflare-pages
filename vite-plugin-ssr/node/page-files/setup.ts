@@ -1,34 +1,44 @@
+import { assert, assertUsage } from '../../shared/utils/assert'
+import { moduleExists } from '../../shared/utils/moduleExists'
 import { isAbsolute, resolve } from 'path'
 import { setPageFilesAsync } from '../../shared/getPageFiles'
-import { assert } from '../../shared/utils/assert'
 import { getSsrEnv } from '../ssrEnv'
 import { hasProp, projectInfo } from '../../shared/utils'
-import { moduleExists } from '../../shared/utils/moduleExists'
-import { loadViteEntry } from './loadViteEntry'
 
 setPageFilesAsync(setPageFiles)
 
 async function setPageFiles(): Promise<unknown> {
   const ssrEnv = getSsrEnv()
 
+  assertUsage(
+    isNodejs(),
+    ssrEnv.isProduction
+      ? "You are running your `vite-plugin-ssr` app in a production environement that doesn't seem to be Node.js. You may need to load `importBuild.js`, see https://vite-plugin-ssr.com/importBuild.js"
+      : "You are trying to develop your `vite-plugin-ssr` app in an environement that doesn't seem to be Node.js. Is your dev setup using Node.js? Note that, for development, `vite-plugin-ssr` only supports Node.js. Contact the `vite-plugin-ssr` maintainers if you need to dev in another environement than Node.js.",
+  )
+
   const viteEntryFile = 'pageFiles.js'
   assertEntry(viteEntryFile)
   const userDist = `${ssrEnv.root}/${ssrEnv.outDir}`
   // Current directory: vite-plugin-ssr/dist/cjs/node/page-files/
-  const pluginDist = `../../../../${ssrEnv.outDir}`
-  const prodPath = `${userDist}/server/${viteEntryFile}`
-  const devPath = `${pluginDist}/esm/node/page-files/${viteEntryFile}`
+  const pluginDist = `../../../../dist`
+  const viteEntryPathProd = `${userDist}/server/${viteEntryFile}`
+  const viteEntryPathDev = `${pluginDist}/esm/node/page-files/${viteEntryFile}`
 
-  const errorMessage =
-    'Make sure to run `vite build && vite build --ssr` before running your Node.js server with `createPageRenderer({ isProduction: true })`'
-
-  const moduleExports = await loadViteEntry({
-    devPath,
-    prodPath,
-    errorMessage,
-    viteDevServer: ssrEnv.viteDevServer,
-    isProduction: ssrEnv.isProduction,
-  })
+  let moduleExports: unknown
+  if (ssrEnv.isProduction) {
+    const prodPathResolved = resolve(viteEntryPathProd)
+    assertUsage(
+      moduleExists(prodPathResolved),
+      'Make sure to run `vite build && vite build --ssr` before running your Node.js server with `createPageRenderer({ isProduction: true })`' +
+        `. (Build file ${prodPathResolved} is missing.)`,
+    )
+    moduleExports = require_(prodPathResolved)
+  } else {
+    assert(ssrEnv.viteDevServer)
+    const devPathResolved = requireResolve(viteEntryPathDev)
+    moduleExports = await ssrEnv.viteDevServer.ssrLoadModule(devPathResolved)
+  }
 
   const pageFiles: unknown = (moduleExports as any).pageFiles || (moduleExports as any).default.pageFiles
   assert(pageFiles)
@@ -77,5 +87,22 @@ function assertEntry(viteEntryFile: string) {
         },
       )}`,
     )
+  }
+}
+
+// `req` instead of `require` so that Webpack doesn't do dynamic dependency analysis
+const req = require
+function require_(modulePath: string): unknown {
+  const req = require
+  return req(modulePath)
+}
+function requireResolve(modulePath: string): string {
+  return req.resolve(modulePath)
+}
+function isNodejs(): boolean {
+  try {
+    return __filename === require.resolve(__filename)
+  } catch (_) {
+    return false
   }
 }

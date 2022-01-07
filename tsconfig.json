@@ -5,14 +5,8 @@
     "moduleResolution": "Node",
     "target": "ES2017",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "types": ["vite/client"],
+    "types": ["vite/client", "@cloudflare/workers-types"],
     "skipLibCheck": true,
     "esModuleInterop": true
-  },
-  "ts-node": {
-    "transpileOnly": true,
-    "compilerOptions": {
-      "module": "CommonJS"
-    }
   }
 }

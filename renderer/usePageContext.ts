@@ -10,11 +10,11 @@ export { setPageContext }
 
 const key = Symbol()
 
-function usePageContext() {
+function usePageContext () {
   const pageContext = inject(key)
   return pageContext
 }
 
-function setPageContext(app: App, pageContext: PageContext) {
+function setPageContext (app: App, pageContext: PageContext) {
   app.provide(key, pageContext)
 }

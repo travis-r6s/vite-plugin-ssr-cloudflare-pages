@@ -5,7 +5,7 @@ import type { PageContextBuiltInClient } from 'vite-plugin-ssr/client'
 
 hydrate()
 
-async function hydrate() {
+async function hydrate () {
   // We do Server Routing, but we can also do Client Routing by using `useClientRouter()`
   // instead of `getPage()`, see https://vite-plugin-ssr.com/useClientRouter
   const pageContext = await getPage<PageContextBuiltInClient & PageContext>()

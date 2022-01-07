@@ -5,20 +5,20 @@ import type { PageContext } from './types'
 
 export { createApp }
 
-function createApp(pageContext: PageContext) {
+function createApp (pageContext: PageContext) {
   const { Page, pageProps } = pageContext
   const PageWithLayout = defineComponent({
-    render() {
+    render () {
       return h(
         PageShell,
         {},
         {
-          default() {
+          default () {
             return h(Page, pageProps || {})
-          },
-        },
+          }
+        }
       )
-    },
+    }
   })
 
   const app = createSSRApp(PageWithLayout)

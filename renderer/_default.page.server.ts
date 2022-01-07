@@ -9,7 +9,7 @@ export { render }
 // See https://vite-plugin-ssr.com/data-fetching
 export const passToClient = ['pageProps', 'urlPathname']
 
-async function render(pageContext: PageContextBuiltIn & PageContext) {
+async function render (pageContext: PageContextBuiltIn & PageContext) {
   const app = createApp(pageContext)
   const appHtml = await renderToString(app)
 
@@ -36,6 +36,6 @@ async function render(pageContext: PageContextBuiltIn & PageContext) {
     documentHtml,
     pageContext: {
       // We can add some `pageContext` here, which is useful if we want to do page redirection https://vite-plugin-ssr.com/page-redirection
-    },
+    }
   }
 }

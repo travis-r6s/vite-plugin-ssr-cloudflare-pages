@@ -1,1 +1,0 @@
-{"version":3,"file":"matchRouteString.d.ts","sourceRoot":"","sources":["../../../../shared/route/matchRouteString.ts"],"names":[],"mappings":"AAEA,OAAO,EAAE,gBAAgB,EAAE,CAAA;AAE3B,iBAAS,gBAAgB,CAAC,WAAW,EAAE,MAAM,EAAE,WAAW,EAAE,MAAM,GAAG,IAAI,GAAG;IAAE,WAAW,EAAE,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,CAAA;CAAE,CAQlH"}

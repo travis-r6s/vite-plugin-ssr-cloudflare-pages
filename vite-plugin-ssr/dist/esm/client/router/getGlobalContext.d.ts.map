@@ -1,1 +1,0 @@
-{"version":3,"file":"getGlobalContext.d.ts","sourceRoot":"","sources":["../../../../client/router/getGlobalContext.ts"],"names":[],"mappings":"AAKA,OAAO,EAAE,gBAAgB,EAAE,CAAA;AAC3B,YAAY,EAAE,WAAW,EAAE,CAAA;AAI3B,iBAAe,gBAAgB;;;;;;;;;;;;GAK9B;AAED,aAAK,WAAW,GAAG;IAAE,QAAQ,EAAE,MAAM,CAAC;IAAC,WAAW,EAAE;QAAE,uBAAuB,EAAE,OAAO,CAAA;KAAE,CAAA;CAAE,EAAE,CAAA"}

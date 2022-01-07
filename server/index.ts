@@ -1,22 +1,21 @@
+import * as vite from 'vite'
 import express from 'express'
+import path from 'path'
 import { createPageRenderer } from 'vite-plugin-ssr'
 
 const isProduction = process.env.NODE_ENV === 'production'
-const root = `${__dirname}/..`
+const root = path.resolve(__dirname, '../')
 
-startServer()
-
-async function startServer() {
+async function startServer () {
   const app = express()
 
   let viteDevServer
   if (isProduction) {
     app.use(express.static(`${root}/dist/client`))
   } else {
-    const vite = require('vite')
     viteDevServer = await vite.createServer({
       root,
-      server: { middlewareMode: 'ssr' },
+      server: { middlewareMode: 'ssr' }
     })
     app.use(viteDevServer.middlewares)
   }
@@ -25,7 +24,7 @@ async function startServer() {
   app.get('*', async (req, res, next) => {
     const url = req.originalUrl
     const pageContextInit = {
-      url,
+      url
     }
     const pageContext = await renderPage(pageContextInit)
     const { httpResponse } = pageContext
@@ -38,3 +37,5 @@ async function startServer() {
   app.listen(port)
   console.log(`Server running at http://localhost:${port}`)
 }
+
+startServer()

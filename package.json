@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "esno ./server",
-    "build": "pnpm run build:site && pnpm run build:worker",
+    "build": "npm run build:site && npm run build:worker",
     "build:site": "vite build && vite build --ssr",
     "build:worker": "node build.js",
     "lint": "eslint . --ext ts,vue --fix",

@@ -2,6 +2,8 @@
 
 This is a demo project showcasing how to use [`vite-plugin-ssr`](https://vite-plugin-ssr.com) and [Cloudflare Pages](https://developers.cloudflare.com/pages/) (with [`wrangler@2`](https://github.com/cloudflare/wrangler2)).
 
+Preview: [https://vite-plugin-ssr-cloudflare-pages.pages.dev](https://vite-plugin-ssr-cloudflare-pages.pages.dev)
+
 ### Pages Setup
 
 When adding your site to Cloudflare Pages, make sure to set the **Build command** to `npm run build`, and the **Build output directory** to `/dist/assets`. 

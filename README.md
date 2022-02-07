@@ -23,3 +23,7 @@ You can preview the site locally (as if it were deployed) using `wrangler@2` - t
 Make sure you have built your site using `pnpm run build`, then start the preview with `pnpm run serve`. 
 
 > You will note that we pass the path to the client-side assets directory, as we did with the Pages setup.
+
+### Potential Issues
+
+Cloudflare workers currently have a limit of 1MB, and a decent sized website will likely go over this limit when bundling the worker (as it bundles all the necessary `vite-plugin-ssr` code as well). Cloudflare have mentioned increasing this limit in the future however, and there is a form you can use to request an increase if needed: https://www.cloudflare.com/en-gb/larger-scripts-on-workers-early-access/

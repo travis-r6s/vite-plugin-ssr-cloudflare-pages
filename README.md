@@ -1,6 +1,6 @@
 # vite-plugin-ssr-cloudflare-pages
 
-This is a demo project showcasing how to use [`vite-plugin-ssr`](https://vite-plugin-ssr.com) and [Cloudflare Pages](https://developers.cloudflare.com/pages/) (with [`wrangler@2`](https://github.com/cloudflare/wrangler2)) together.
+This is a demo project showcasing how to use [`vite-plugin-ssr`](https://vite-plugin-ssr.com) and [Cloudflare Pages](https://developers.cloudflare.com/pages/) (with [`wrangler@2`](https://github.com/cloudflare/wrangler2)).
 
 ### Pages Setup
 
